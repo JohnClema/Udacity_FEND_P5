@@ -6,7 +6,7 @@ var ghPages = require('gulp-gh-pages');
 var ngrok     = require('ngrok');
 var psi       = require('psi');
 var sequence  = require('run-sequence');
-var site      = '';
+var site      = 'http://johnclema.github.io/frontend-nanodegree-mobile-portfolio/';
 var portVal   = 8080;
 var browserSync = require('browser-sync');
 
@@ -183,6 +183,6 @@ gulp.task('psi', ['psi-seq'], function() {
 });
 
 gulp.task('deploy', function() {
-  return gulp.src('/dist/**/*')
+  return gulp.src('./dist/**/*')
     .pipe(ghPages());
 });
