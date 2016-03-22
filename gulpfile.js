@@ -52,7 +52,7 @@ var config = {
       "target": "/views/images"
     },
     "html": {
-      "source": "views/*.html",
+      "source": "/views/*.html",
       "target": "/views"
     },
     "css": {
@@ -60,7 +60,7 @@ var config = {
       "target": "/views/css"
     },
     "js": {
-      "source": "views/js/*",
+      "source": "/views/js/*",
       "target": "/views/js"
     }
   }
