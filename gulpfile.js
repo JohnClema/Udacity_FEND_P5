@@ -1,5 +1,7 @@
 var gulp = require('gulp');
 
+var ghPages = require('gulp-gh-pages');
+
 // Serving through ngrok tunnel
 var ngrok     = require('ngrok');
 var psi       = require('psi');
@@ -178,4 +180,9 @@ gulp.task('psi-seq', function (cb) {
 gulp.task('psi', ['psi-seq'], function() {
   console.log('Woohoo! Check out your page speed scores!');
   process.exit();
+});
+
+gulp.task('deploy', function() {
+  return gulp.src('/dist/**/*')
+    .pipe(ghPages());
 });
