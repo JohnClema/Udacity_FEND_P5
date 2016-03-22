@@ -9,7 +9,11 @@ var portVal   = 8080;
 var browserSync = require('browser-sync');
 
 //DOM Optimisation packages
+var rename = require('gulp-rename');
+
 var cssmin    = require('gulp-cssmin');
+var uncss = require('gulp-uncss');
+
 var htmlmin   = require('gulp-htmlmin');
 var imagemin = require('gulp-imagemin');
 var inline    = require('gulp-inline');
@@ -22,26 +26,27 @@ var webp    = require('gulp-webp');
 //Mapping of the folders
 var config = {
   "build": "dist",
+  "source": "src",
   "images": {
-    "source": "img/*",
+    "source": "/img/*",
     "target": "/img",
     "views": "images/"
   },
   "css": {
-    "source": "css/*",
+    "source": "/css/*",
     "target": "/css"
   },
   "js": {
-    "source": "js/*",
+    "source": "/js/*",
     "target": "/js"
   },
   "html": {
-    "source": "*.html",
+    "source": "/*.html",
     "target": "/"
   },
   "views": {
     "images": {
-      "source": "views/images/*",
+      "source": "/views/images/*",
       "target": "/views/images"
     },
     "html": {
@@ -49,7 +54,7 @@ var config = {
       "target": "/views"
     },
     "css": {
-      "source": "views/css/*",
+      "source": "/views/css/*",
       "target": "/views/css"
     },
     "js": {
@@ -61,13 +66,14 @@ var config = {
 
 //Optimisations for the main folder
 gulp.task('css', function () {
-  return gulp.src(config.css.source)
+  return gulp.src(config.source + config.css.source)
   .pipe(cssmin())
+  // .pipe(uncss({ html: [config.build + '/**/*.html']}))
   .pipe(gulp.dest(config.build + config.css.target));
 });
 
 gulp.task('html', function () {
-  return gulp.src(config.html.source)
+  return gulp.src(config.source + config.html.source)
   .pipe(inline())
   .pipe(htmlmin({collapseWhitespace: true}))
   .pipe(minline())
@@ -75,13 +81,13 @@ gulp.task('html', function () {
 });
 
 gulp.task('js', function () {
-  return gulp.src(config.js.source)
+  return gulp.src(config.source + config.js.source)
   .pipe(uglify())
   .pipe(gulp.dest(config.build + config.js.target));
 });
 
 gulp.task('img', function() {
-  return gulp.src(config.images.source)
+  return gulp.src(config.source + config.images.source)
   .pipe(imagemin({
     progressive: true,
   }))
@@ -91,13 +97,13 @@ gulp.task('img', function() {
 
 //Optimisations for the pizza views
 gulp.task('views-css', function () {
-  return gulp.src(config.views.css.source)
+  return gulp.src(config.source + config.views.css.source)
   .pipe(cssmin())
   .pipe(gulp.dest(config.build + config.views.css.target));
 });
 
 gulp.task('views-html', function () {
-  return gulp.src(config.views.html.source)
+  return gulp.src(config.source + config.views.html.source)
     .pipe(inline({ base: 'views/'}))
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(minline())
@@ -105,13 +111,13 @@ gulp.task('views-html', function () {
 });
 
 gulp.task('views-js', function () {
-  return gulp.src(config.views.js.source)
+  return gulp.src(config.source + config.views.js.source)
   .pipe(uglify())
   .pipe(gulp.dest(config.build + config.views.js.target));
 });
 
 gulp.task('views-img', function() {
-  return gulp.src(config.views.images.source)
+  return gulp.src(config.source + config.views.images.source)
     .pipe(imagemin({
       progressive: true,
     }))
