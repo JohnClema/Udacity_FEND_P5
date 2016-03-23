@@ -423,7 +423,7 @@ var resizePizzas = function(size) {
 
 
   /**
-    * Note: determineDx and size switcher functions were removed; they were
+    * CHANGE: determineDx and size switcher functions were removed; they were
     * unnecessarily converting between pixels and percentages. This method
     * now does not produce forced synchronous layouts.
   **/
@@ -444,7 +444,11 @@ var resizePizzas = function(size) {
         console.log("bug in sizeSwitcher");
     }
 
-    var randomPizzas = document.querySelectorAll(".randomPizzaContainer");
+    /*
+    * CHANGE: Random pizzas now collected by getElementsByClassName as opposed to
+    * querySelectorAll as the getElementsByClassName method is orders of magnitude faster
+    */
+    var randomPizzas = document.getElementsByClassname(".randomPizzaContainer");
     for(var i = 0; i < randomPizzas.length; i++) {
       randomPizzas[i].style.width = newSize + "%";
     }
