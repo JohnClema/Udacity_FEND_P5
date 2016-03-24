@@ -6,7 +6,7 @@ var ghPages = require('gulp-gh-pages');
 var ngrok     = require('ngrok');
 var psi       = require('psi');
 var sequence  = require('run-sequence');
-var site      = 'http://johnclema.github.io/frontend-nanodegree-mobile-portfolio/';
+var site      = '';
 var portVal   = 8080;
 var browserSync = require('browser-sync');
 
@@ -18,12 +18,19 @@ var uncss = require('gulp-uncss');
 
 var htmlmin   = require('gulp-htmlmin');
 var imagemin = require('gulp-imagemin');
+var imageResize = require('gulp-image-resize');
 var inline    = require('gulp-inline');
 var minline   = require('gulp-minify-inline');
 var uglify    = require('gulp-uglify');
+inlineCss = require('gulp-inline-css');
+
+gulp.task('default', function() {
+    return gulp.src('./*.html')
+        .pipe(gulp.dest('build/'));
+});
 
 // var gzip    = require('gulp-gzip');
-var webp    = require('gulp-webp');
+// var webp    = require('gulp-webp');
 
 //Mapping of the folders
 var config = {
@@ -70,15 +77,14 @@ var config = {
 gulp.task('css', function () {
   return gulp.src(config.source + config.css.source)
   .pipe(cssmin())
-  // .pipe(uncss({ html: [config.build + '/**/*.html']}))
   .pipe(gulp.dest(config.build + config.css.target));
 });
 
 gulp.task('html', function () {
   return gulp.src(config.source + config.html.source)
-  .pipe(inline())
+  .pipe(inlineCss())
+  .pipe(uncss({ html: [config.source + '*.html']}))
   .pipe(htmlmin({collapseWhitespace: true}))
-  .pipe(minline())
   .pipe(gulp.dest(config.build + config.html.target));
 });
 
@@ -93,7 +99,6 @@ gulp.task('img', function() {
   .pipe(imagemin({
     progressive: true,
   }))
-  .pipe(webp())
   .pipe(gulp.dest(config.build + config.images.target));
 });
 
@@ -124,6 +129,16 @@ gulp.task('views-img', function() {
       progressive: true,
     }))
   .pipe(gulp.dest(config.build + config.views.images.target));
+});
+gulp.task('image-resize', function () {
+  gulp.src(config.source + config.views.images.source + 'test.png')
+    .pipe(imageResize({
+      width : 100,
+      height : 100,
+      crop : true,
+      upscale : false
+    }))
+    .pipe(gulp.dest('dist'));
 });
 
 //DOM Optimisation task
