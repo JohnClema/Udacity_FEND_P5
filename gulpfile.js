@@ -22,7 +22,7 @@ var imageResize = require('gulp-image-resize');
 var inline    = require('gulp-inline');
 var minline   = require('gulp-minify-inline');
 var uglify    = require('gulp-uglify');
-inlineCss = require('gulp-inline-css');
+var inlineCss = require('gulp-inline-css');
 
 gulp.task('default', function() {
     return gulp.src('./*.html')
@@ -83,7 +83,7 @@ gulp.task('css', function () {
 gulp.task('html', function () {
   return gulp.src(config.source + config.html.source)
   .pipe(inlineCss())
-  .pipe(uncss({ html: [config.source + '*.html']}))
+  // .pipe(uncss({ html: [config.source + '*.html']}))
   .pipe(htmlmin({collapseWhitespace: true}))
   .pipe(gulp.dest(config.build + config.html.target));
 });
@@ -130,22 +130,43 @@ gulp.task('views-img', function() {
     }))
   .pipe(gulp.dest(config.build + config.views.images.target));
 });
-gulp.task('image-resize', function () {
-  gulp.src(config.source + config.views.images.source + 'test.png')
+gulp.task('resize-pizzeria-image', function () {
+  return gulp.src(config.source + config.views.images.target + '/pizzeria.jpg')
     .pipe(imageResize({
-      width : 100,
-      height : 100,
-      crop : true,
-      upscale : false
+      width : 100
     }))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest(config.build + config.views.images.target + ''));
+});
+gulp.task('resize-pizza-image', function () {
+  return gulp.src(config.source + config.views.images.target + '/pizza.png')
+    .pipe(imageResize({
+      width : 74
+    }))
+    .pipe(rename(config.build + config.views.images.target + '/pizza-small.png'))
+    .pipe(gulp.dest('./'));
 });
 
 //DOM Optimisation task
-gulp.task('optimisation', ['html', 'css', 'js', 'img', 'views-css', 'views-html', 'views-js', 'views-img']);
+// gulp.task('optimisation', []);
+gulp.task('optimisation-seq', function (cb) {
+  return sequence(
+    'html',
+    'css',
+    'js',
+    'img',
+    'views-css',
+    'views-html',
+    'views-js',
+    'views-img',
+    'resize-pizzeria-image',
+    'resize-pizza-image',
+    cb
+  );
+});
+
 
 // Server task that runs optimisations
-gulp.task('browser-sync-psi', ['optimisation'], function() {
+gulp.task('browser-sync-psi', ['optimisation-seq'], function() {
   browserSync({
     port: portVal,
     open: false,
