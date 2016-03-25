@@ -409,13 +409,13 @@ var resizePizzas = function(size) {
   function changeSliderLabel(size) {
     switch(size) {
       case "1":
-        document.getElementById("#pizzaSize").innerHTML = "Small";
+        document.getElementById("pizzaSize").innerHTML = "Small";
         return;
       case "2":
-        document.getElementById("#pizzaSize").innerHTML = "Medium";
+        document.getElementById("pizzaSize").innerHTML = "Medium";
         return;
       case "3":
-        document.getElementById("#pizzaSize").innerHTML = "Large";
+        document.getElementById("pizzaSize").innerHTML = "Large";
         return;
       default:
         console.log("bug in changeSliderLabel");
@@ -451,7 +451,7 @@ var resizePizzas = function(size) {
     * CHANGE: Random pizzas now collected by getElementsByClassName as opposed to
     * querySelectorAll as the getElementsByClassName method is orders of magnitude faster
     */
-    var randomPizzas = document.getElementsByClassname(".randomPizzaContainer");
+    var randomPizzas = document.getElementsByClassname("randomPizzaContainer");
     for(var i = 0; i < randomPizzas.length; i++) {
       randomPizzas[i].style.width = newSize + "%";
     }
@@ -536,8 +536,8 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  var movingPizzas = document.getElementById("#movingPizzas1");
-  for (var i = 0; i < 200; i++) {
+  var movingPizzas = document.getElementById("movingPizzas1");
+  for (var i = 0; i < 20; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
