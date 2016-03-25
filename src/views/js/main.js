@@ -529,7 +529,8 @@ function updatePositions() {
 window.addEventListener('scroll', updatePositions);
 
 /*
-* CHANGE: querySelector for movingPizzas1 to getElementById and moved it outside of the loop
+* CHANGE: querySelector for movingPizzas1 to getElementById and moved it outside of the loop,
+* Also reduced the number of pizzas being rendered to 20
 */
 
 // Generates the sliding pizzas when the page loads.
