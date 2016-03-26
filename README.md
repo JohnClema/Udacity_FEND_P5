@@ -18,4 +18,5 @@ Steps taken
 3. Moved function calls mentioned in 2. outside of loops where possible
 4. Move computation of new pizza size outside loop, basing the size on the first pizza only
 5. Reduced the number of pizzas being rendered to 20
-6. Minified main.js
+6. Added backface-visibility to the css
+7. Minified main.js
