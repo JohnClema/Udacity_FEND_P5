@@ -25,4 +25,5 @@ Steps taken
 6. Added backface-visibility to the css
 7. Moved phase variable out of the loop and kept it to five constant
 * values in an array
-8. Minified main.js
+8. Removed redundant dx inner function on resize pizzas; increased performance for pizza size change speed
+9. Minified main.js
